@@ -1,17 +1,15 @@
 def fibonacci(n):
     a, b = 0, 1
-    count = 1
-    while count <= n:
+    for i in range(n):
         yield a
         a, b = b, a + b
-        count += 1
 
 
-user_input = int(input("Introdu un numar: "))
-fib_gen = fibonacci(user_input)
-fib_number = 0
-# save a N number of Fibonacci
-for num in fib_gen:
-    fib_number = num
+list_index = [5, 200, 1000, 2000]
 
-print(f"Fibonacci({user_input}) = {fib_number}")
+for index in list_index:
+    fib_gen = fibonacci(index)
+    fib_number = 0
+    for num in fib_gen:
+        fib_number = num
+    print(f'Fibonaci({index}) = {fib_number}')
