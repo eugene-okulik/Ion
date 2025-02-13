@@ -5,11 +5,9 @@ def fibonacci(n):
         a, b = b, a + b
 
 
-list_index = [5, 200, 1000, 2000]
-
-for index in list_index:
-    fib_gen = fibonacci(index)
+for i in 5, 200, 1000, 2000:
+    fib_gen = fibonacci(i)
     fib_number = 0
     for num in fib_gen:
         fib_number = num
-    print(f'Fibonaci({index}) = {fib_number}')
+    print(f'Fibonaci({i}) = {fib_number}')
