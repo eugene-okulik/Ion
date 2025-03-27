@@ -1,14 +1,14 @@
-insert into students (id,name,second_name) values (20000,'student','test');
+insert into students (name,second_name) values ('student','test');
 insert into books (title,taken_by_student_id) values ('Mathematics',20000);
 insert into books (title,taken_by_student_id) values ('Economy',20000);
 insert into groups(title,start_date,end_date) values ('Automation Testers','Feb 2020','June 2020');
-insert into subjets (id,title) values
-(10001,'operation basic'),
-(10002,'economy');
-INSERT INTO lessons (title,subject_id) VALUES 
-('math base',10001),
-('fundamental economy',10002);
-insert into marks (value,lesson_id,student_id) values (8,10001,50000),(10,10002,20000);
+insert into subjets (title) values
+('operation basic'),
+('economy');
+INSERT INTO lessons (title) VALUES 
+('math base'),
+('fundamental economy');
+insert into marks (value) values (8),(10);
 
 
 SELECT m.value AS mark, l.title AS lesson_title, s.title AS subject_title
