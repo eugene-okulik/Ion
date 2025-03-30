@@ -48,9 +48,9 @@ mark = [
     (10, lesson2_id2, student_id)
 ]
 cursor.executemany(notes, mark)
-#select all from create students
+# select all from create students
 student_query = f"""
-SELECT 
+SELECT
     s.id AS student_id,
     s.name,
     s.second_name,
