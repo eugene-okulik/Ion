@@ -11,12 +11,7 @@ db = mysql.connect(
 
 cursor = db.cursor(dictionary=True)
 
-cursor.execute(
-    "INSERT INTO `groups` (title, start_date, end_date) VALUES ('api automation', '2025-02-01', '2025-07-31')"
-)
-group_id = cursor.lastrowid
-
-cursor.execute(f"INSERT INTO students(name, second_name, group_id) VALUES ('Automation', 'Programist', '{group_id}')")
+cursor.execute(f"INSERT INTO students(name, second_name) VALUES ('Automation', 'Programist')")
 student_id = cursor.lastrowid
 
 query = "INSERT INTO books(title, taken_by_student_id) VALUES (%s, %s)"
@@ -25,6 +20,13 @@ values = [
     ('Automation with Java', student_id)
 ]
 cursor.executemany(query, values)
+
+cursor.execute(
+    "INSERT INTO `groups` (title, start_date, end_date) VALUES ('api automation', '2025-02-01', '2025-07-31')"
+)
+group_id = cursor.lastrowid
+
+cursor.execute(f"insert into students(group_id) values ('{group_id}')")
 
 cursor.execute("INSERT INTO subjets (title) VALUES ('front end automation')")
 subject_id1 = cursor.lastrowid
