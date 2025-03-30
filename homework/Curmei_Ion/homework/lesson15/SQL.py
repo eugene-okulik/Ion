@@ -11,7 +11,7 @@ db = mysql.connect(
 
 cursor = db.cursor(dictionary=True)
 
-cursor.execute(f"INSERT INTO students(name, second_name) VALUES ('Automation', 'Programist')")
+cursor.execute("INSERT INTO students(name, second_name) VALUES ('Automation', 'Programist')")
 student_id = cursor.lastrowid
 
 query = "INSERT INTO books(title, taken_by_student_id) VALUES (%s, %s)"
