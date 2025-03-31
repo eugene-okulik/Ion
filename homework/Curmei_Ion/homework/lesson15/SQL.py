@@ -26,7 +26,7 @@ cursor.execute(
 )
 group_id = cursor.lastrowid
 
-cursor.execute(f"insert into students(group_id) values ('{group_id}')")
+cursor.execute(f"update students set group_id = '{group_id}' where id = '{student_id}'")
 
 cursor.execute("INSERT INTO subjets (title) VALUES ('front end automation')")
 subject_id1 = cursor.lastrowid
