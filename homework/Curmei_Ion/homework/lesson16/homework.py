@@ -70,7 +70,7 @@ for row in data:
     if result:
         base.append(row)
 
-print(f"Rânduri care există în baza de date:\n")
+print("Rânduri care există în baza de date:\n")
 for r in base:
     print(r)
 
