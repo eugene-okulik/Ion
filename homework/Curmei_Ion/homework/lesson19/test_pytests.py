@@ -3,11 +3,13 @@ import requests
 
 api_url = 'http://167.172.172.115:52353/object'
 
+
 @pytest.fixture(scope='session', autouse=True)
 def session_start_end():
     print("Start testing")
     yield
     print("Testing completed")
+
 
 @pytest.fixture(autouse=True)
 def test_prints():
@@ -31,17 +33,14 @@ def test_create_object(data):
 
 @pytest.mark.medium
 def test_update_object():
-
     create_body = {"id": 104, "name": "To Update", "data": {"color": "yellow", "size": "big"}}
     create_resp = requests.post(api_url, json=create_body)
     obj_id = create_resp.json()["id"]
-
 
     update_body = {"id": obj_id, "name": "Updated Name", "data": {"color": "black", "size": "tiny"}}
     update_resp = requests.put(f"{api_url}/{obj_id}", json=update_body)
     assert update_resp.status_code == 200
     assert update_resp.json()["name"] == "Updated Name"
-
 
     requests.delete(f"{api_url}/{obj_id}")
 
@@ -78,7 +77,6 @@ def test_delete_object():
 
     delete_resp = requests.delete(f"{api_url}/{obj_id}")
     assert delete_resp.status_code == 200
-
 
     get_resp = requests.get(f"{api_url}/{obj_id}")
     assert get_resp.status_code == 404
