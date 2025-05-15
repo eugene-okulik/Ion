@@ -11,22 +11,27 @@ def session_start_end():
     print("Testing completed")
 
 
+@pytest.fixture(autouse=True)
+def prints_between_tests():
+    print("before test")
+    yield
+    print("after test")
+
+
 @pytest.fixture
-def create_delete_object():
-    created_ids = []
+def create_post_id():
+    body = {
+        "name": "To Update",
+        "data": {"color": "yellow", "size": "big"}
+    }
 
-    def _create_object(data):
-        response = requests.post(api_url, json=data)
-        assert response.status_code == 200
-        assert response.json()["name"] == data["name"]
-        object_id = response.json()['id']
-        created_ids.append(object_id)
-        return object_id
-
-    yield _create_object
-
-    for obj_id in created_ids:
-        requests.delete(f"{api_url}/{obj_id}")
+    response = requests.post(f'{api_url}', json=body)
+    post_id = response.json()['id']
+    print("creating the post id ")
+    yield post_id
+    print("deleting the post id ")
+    delete_id = f'{api_url}/{post_id}'
+    delete_post_id = requests.delete(delete_id)
 
 
 @pytest.mark.parametrize("data", [
@@ -34,54 +39,54 @@ def create_delete_object():
     {"id": 102, "name": "Object Two", "data": {"color": "green", "size": "medium"}},
     {"id": 103, "name": "Object Three", "data": {"color": "blue", "size": "large"}},
 ])
-def test_create_object(create_delete_object, data):
-    create_delete_object(data)
-
-
-@pytest.fixture(autouse=True)
-def test_prints():
-    print("before test")
-    yield
-    print("after test")
+def test_create_object(create_post_id, data):
+    create_post_id(data)
 
 
 @pytest.mark.critical
-def test_update_object(create_delete_object):
-    create_body = {"name": "To Update", "data": {"color": "yellow", "size": "big"}}
-    obj_id = create_delete_object(create_body)
+def test_put_a_post(create_post_id):
+    put_url = f'{api_url}/{create_post_id}'
+    body = {
+        {"id": 101, "name": "Object One",
+         "data": {"color": "red", "size": "small"}}
+    }
 
-    update_body = {"name": "Updated Name", "data": {"color": "black", "size": "tiny"}}
-    update_resp = requests.put(f"{api_url}/{obj_id}", json=update_body)
-    assert update_resp.status_code == 200
-    assert update_resp.json()["name"] == "Updated Name"
+    response = requests.put(put_url, json=body)
+    data = response.json()
+
+    assert response.status_code == 200
+    assert data['data'] == body['data']
 
 
 @pytest.mark.medium
-def test_patch_object(create_delete_object):
-    create_body = {"name": "Patch Me", "data": {"color": "white", "size": "normal"}}
-    obj_id = create_delete_object(create_body)
+def test_patch_a_post():
+    post_id_to_patch = 1
+    patch_url = f'{api_url}/{post_id_to_patch}'
+    body = {
+        "id": 101, "name": "Object One"
+    }
 
-    patch_body = {"name": "Patched", "data": {"color": "pink", "size": "very small"}}
-    patch_resp = requests.patch(f"{api_url}/{obj_id}", json=patch_body)
-    assert patch_resp.status_code == 200
-    assert patch_resp.json()["name"] == "Patched"
+    response = requests.patch(patch_url, json=body)
+    data = response.json()
+
+    assert response.status_code == 200
+    assert data['name'] == body['name']
 
 
-def test_get_object_by_id(create_delete_object):
+def test_get_object_by_id(create_post_id):
     create_body = {"name": "Get Me", "data": {"color": "orange", "size": "medium"}}
-    obj_id = create_delete_object(create_body)
+    obj_id = create_post_id(create_body)
 
     get_resp = requests.get(f"{api_url}/{obj_id}")
     assert get_resp.status_code == 200
     assert get_resp.json()["id"] == obj_id
 
 
-def test_delete_object(create_delete_object):
-    create_body = {"name": "To Delete", "data": {"color": "gray", "size": "large"}}
-    obj_id = create_delete_object(create_body)
+def test_delete_post_id(create_post_id):
+    post_it_to_delete = create_post_id
+    delete_url = f'{api_url}/{post_it_to_delete}'
+    response = requests.delete(delete_url)
 
-    delete_resp = requests.delete(f"{api_url}/{obj_id}")
-    assert delete_resp.status_code == 200
+    get_response = requests.get(delete_url)
 
-    get_resp = requests.get(f"{api_url}/{obj_id}")
-    assert get_resp.status_code == 404
+    assert get_response.status_code == 404
