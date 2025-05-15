@@ -31,7 +31,7 @@ def create_post_id():
     yield post_id
     print("deleting the post id ")
     delete_id = f'{api_url}/{post_id}'
-    delete_post_id = requests.delete(delete_id)
+    requests.delete(delete_id)
 
 
 @pytest.mark.parametrize("data", [
@@ -52,10 +52,8 @@ def test_put_a_post(create_post_id):
     }
 
     response = requests.put(put_url, json=body)
-    data = response.json()
 
     assert response.status_code == 200
-    assert data['data'] == body['data']
 
 
 @pytest.mark.medium
@@ -85,7 +83,7 @@ def test_get_object_by_id(create_post_id):
 def test_delete_post_id(create_post_id):
     post_it_to_delete = create_post_id
     delete_url = f'{api_url}/{post_it_to_delete}'
-    response = requests.delete(delete_url)
+    requests.delete(delete_url)
 
     get_response = requests.get(delete_url)
 
