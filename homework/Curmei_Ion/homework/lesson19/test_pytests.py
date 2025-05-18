@@ -39,12 +39,17 @@ def create_post_id():
     {"id": 102, "name": "Object Two", "data": {"color": "green", "size": "medium"}},
     {"id": 103, "name": "Object Three", "data": {"color": "blue", "size": "large"}},
 ])
-def test_create_object(create_post_id, data):
-    create_post_id(data)
+def test_create_object(data):
+    response = requests.post(api_url, json=data)
+    assert response.status_code == 201
+    response_data = response.json()
+    assert response_data.get('id') == data['id']
+    assert response_data.get('name') == data['name']
+    assert response_data.get('data') == data['data']
 
 
 @pytest.mark.critical
-def test_put_a_post(create_post_id):
+def test_put(create_post_id):
     put_url = f'{api_url}/{create_post_id}'
     body = {
         {"id": 101, "name": "Object One",
@@ -57,9 +62,8 @@ def test_put_a_post(create_post_id):
 
 
 @pytest.mark.medium
-def test_patch_a_post():
-    post_id_to_patch = 1
-    patch_url = f'{api_url}/{post_id_to_patch}'
+def test_patch():
+    patch_url = f'{api_url}'
     body = {
         "id": 101, "name": "Object One"
     }
@@ -72,15 +76,15 @@ def test_patch_a_post():
 
 
 def test_get_object_by_id(create_post_id):
-    create_body = {"name": "Get Me", "data": {"color": "orange", "size": "medium"}}
-    obj_id = create_post_id(create_body)
+    post_id_to_patch = 1
+    patch_url = f'{api_url}/{post_id_to_patch}'
 
-    get_resp = requests.get(f"{api_url}/{obj_id}")
+    get_resp = requests.get(patch_url)
     assert get_resp.status_code == 200
-    assert get_resp.json()["id"] == obj_id
+    assert get_resp.json()["id"] == post_id_to_patch
 
 
-def test_delete_post_id(create_post_id):
+def test_delete_object_by_id(create_post_id):
     post_it_to_delete = create_post_id
     delete_url = f'{api_url}/{post_it_to_delete}'
     requests.delete(delete_url)
