@@ -1,0 +1,10 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Allure Report generated files
+allure-report/
+allure-results/
+
+# Python virtual environments (good practice)
+venv/
+.venv/
