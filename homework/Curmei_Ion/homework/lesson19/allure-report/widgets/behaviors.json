@@ -1,0 +1,1 @@
+{"total":5,"items":[{"uid":"c31dc173ceab7b59721be42625cf8174","name":"Modify api","statistic":{"failed":0,"broken":2,"skipped":0,"passed":1,"unknown":0,"total":3}},{"uid":"bb30e847738ef9754a7d5637e84e88f3","name":"Delete api","statistic":{"failed":0,"broken":0,"skipped":0,"passed":1,"unknown":0,"total":1}}]}
