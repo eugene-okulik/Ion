@@ -58,7 +58,7 @@ def test_put(create_post_id):
     with allure.step('Get test data:'):
         body = {
             {"id": 101, "name": "Object One",
-            "data": {"color": "red", "size": "small"}}
+             "data": {"color": "red", "size": "small"}}
         }
 
     response = requests.put(put_url, json=body)
