@@ -5,6 +5,8 @@ import requests
 api_url = 'http://167.172.172.115:52353/object'
 
 
+# coment
+
 @pytest.fixture(scope='session', autouse=True)
 def session_start_end():
     print("Start testing")
