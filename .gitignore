@@ -1,8 +1,41 @@
-venv
-.idea
-.DS_Store
-.pytest_cache
-.venv
-__pycache__
-credentials.py
-.env
+# Python virtual environments
+venv/
+.venv/
+env/
+.env/
+
+# Byte-code files
+*.pyc
+__pycache__/
+*.pyd
+
+# Editor/IDE specific files
+.idea/             # IntelliJ IDEA / PyCharm
+.vscode/           # VS Code
+*.iml              # IntelliJ IDEA
+.project           # Eclipse
+.pydevproject      # Eclipse
+
+# Allure Report generated files (FOARTE IMPORTANT pentru cazul tău!)
+allure-report/
+allure-results/
+
+# Pytest cache and test-related files
+.pytest_cache/
+.coverage
+
+# Compiled files (e.g., from C extensions)
+*.so
+
+# Distribution / build
+dist/
+build/
+*.egg-info/
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# Operating System Files
+.DS_Store          # macOS
+Thumbs.db          # Windows
