@@ -64,7 +64,7 @@ def test_put(create_post_id):
         }
 
     response = requests.put(put_url, json=body)
-    with allure.step(f'check the satus code is 200'):
+    with allure.step('check the satus code is 200'):
         assert response.status_code == 200
 
 
@@ -80,7 +80,7 @@ def test_patch():
 
     response = requests.patch(patch_url, json=body)
     data = response.json()
-    with allure.step(f'check the satus code is 200'):
+    with allure.step('check the satus code is 200'):
         assert response.status_code == 200
         assert data['name'] == body['name']
 
@@ -92,7 +92,7 @@ def test_get_object_by_id(create_post_id):
     patch_url = f'{api_url}/{post_id_to_patch}'
 
     get_resp = requests.get(patch_url)
-    with allure.step(f'check the satus code is 200'):
+    with allure.step('check the satus code is 200'):
         assert get_resp.status_code == 200
     assert get_resp.json()["id"] == post_id_to_patch
 
@@ -107,5 +107,5 @@ def test_delete_object_by_id(create_post_id):
 
     get_response = requests.get(delete_url)
 
-    with allure.step(f'check the satus code is 200'):
+    with allure.step('check the satus code is 200'):
         assert get_response.status_code == 404
