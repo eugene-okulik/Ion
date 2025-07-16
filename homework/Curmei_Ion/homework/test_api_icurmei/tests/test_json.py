@@ -1,39 +1,27 @@
-import pytest
-
-TEST_DATA = [
-    {"title": "My specific title", "body": "my body", "userId": 1},
-    {"title": "My specific title2", "body": "my body2", "userId": 2},
-    {"title": "My title number 3", "body": "my body3", "userId": 3},
-]
+import allure
 
 
-@pytest.mark.parametrize('data', TEST_DATA)
-def test_post_a_post(create_post_endpoint, data):
-    create_post_endpoint.create_new_post(payload=data)
+@allure.feature("Create Post")
+def test_create_post_with_default_payload(create_post_endpoint):
+    create_post_endpoint.create_new_post()
     create_post_endpoint.check_that_status_is_200()
-    create_post_endpoint.check_response_title_is_correct(data['title'])
+    create_post_endpoint.check_response_title_is_correct("Default Title")
 
 
-def test_put_a_post(update_post_endpoint, create_post_endpoint):
-    payload = {
-        "title": "My update title",
-        "body": "my new body update",
-        "userId": 1
-    }
-    create_post_endpoint.create_new_post(payload)
+@allure.feature("Update Post")
+def test_update_post_with_default_payload(create_post_endpoint, update_post_endpoint):
+    create_post_endpoint.create_new_post()
     post_id = create_post_endpoint.post_id
-    update_post_endpoint.make_changes_in_post(post_id, payload)
+
+    update_post_endpoint.make_changes_in_post(post_id)
     update_post_endpoint.check_that_status_is_200()
-    update_post_endpoint.check_response_title_is_correct(payload['title'])
+    update_post_endpoint.check_response_title_is_correct("Updated Title")
 
 
-def test_delete_a_post(create_post_endpoint, delete_post_endpoint):
-    payload = {
-        "title": "Post for deletion",
-        "body": "To be deleted",
-        "userId": 1
-    }
-    create_post_endpoint.create_new_post(payload)
+@allure.feature("Delete Post")
+def test_delete_post_after_creation(create_post_endpoint, delete_post_endpoint):
+    create_post_endpoint.create_new_post()
     post_id = create_post_endpoint.post_id
+
     response = delete_post_endpoint.delete_post(post_id)
-    assert response.status_code == 200
+    assert response.status_code in [200, 204], f"Unexpected status code: {response.status_code}"

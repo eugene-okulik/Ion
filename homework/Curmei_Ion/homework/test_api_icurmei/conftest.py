@@ -1,4 +1,4 @@
-import pytest  # coment for lint
+import pytest
 from endpoints.create_post import CreatePost
 from endpoints.update_post import UpdatePost
 from endpoints.delete_post import DeletePost
