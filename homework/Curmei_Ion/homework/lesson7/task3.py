@@ -1,7 +1,7 @@
-msg1 = 'result of operation: 42'
-msg2 = 'result of the program: 54'
-msg3 = 'result of operation: 209'
-msg4 = 'result: 2'
+msg1 = "result of operation: 42"
+msg2 = "result of the program: 54"
+msg3 = "result of operation: 209"
+msg4 = "result: 2"
 
 
 def add_number_msg(message):

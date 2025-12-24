@@ -12,5 +12,5 @@ def calc(x, y):
     #     print('Нужно было ввести числа')
 
 
-print(calc(input('number'), input('number')))
-print('hello!')
+print(calc(input("number"), input("number")))
+print("hello!")

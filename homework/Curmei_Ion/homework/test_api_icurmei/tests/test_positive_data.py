@@ -4,7 +4,13 @@ import allure
 # Test Data
 bulk_phones = [
     {"modelul": "iPhone", "submodelul": "15", "anul": 2023, "CPU": "A16", "RAM": "6GB"},
-    {"modelul": "Samsung", "submodelul": "S24", "anul": 2024, "CPU": "Exynos", "RAM": "8GB"}
+    {
+        "modelul": "Samsung",
+        "submodelul": "S24",
+        "anul": 2024,
+        "CPU": "Exynos",
+        "RAM": "8GB",
+    },
 ]
 
 
@@ -16,7 +22,7 @@ def test_create_and_read(get_api, phone_setup):
 
     # Get_API internally validates status 200 and structure
     get_api.get_all()
-    get_api.get_by_id(expected_model=phone_setup['modelul'])
+    get_api.get_by_id(expected_model=phone_setup["modelul"])
 
 
 @allure.feature("Phone Management - Positive")
@@ -44,7 +50,7 @@ def test_delete_resource(delete_api, phone_setup):
     """Verifies deletion."""
     allure.dynamic.title("DELETE: Phone Deletion")
     # Delete_API returns response, but complex validation is in negative tests
-    delete_api.delete_phone(phone_setup['id'])
+    delete_api.delete_phone(phone_setup["id"])
 
     # The verify_is_gone method in Delete_API class already includes the 404 assertion.
-    delete_api.verify_is_gone(phone_setup['id'])
+    delete_api.verify_is_gone(phone_setup["id"])

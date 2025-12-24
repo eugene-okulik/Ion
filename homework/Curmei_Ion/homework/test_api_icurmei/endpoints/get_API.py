@@ -16,18 +16,25 @@ class Get_API(Create_API):
 
         # Attach response in Allure for quick debugging
         allure.attach(
-            json.dumps(response.json(), indent=4) if response.status_code == 200 else response.text,
+            (
+                json.dumps(response.json(), indent=4)
+                if response.status_code == 200
+                else response.text
+            ),
             name="Server Response (List)",
-            attachment_type=allure.attachment_type.JSON
+            attachment_type=allure.attachment_type.JSON,
         )
 
         with allure.step("VALIDATION: Status 200 and Structure"):
-            with allure.step(f"Status Code Check: Expected [200] | Actual [{response.status_code}]"):
+            with allure.step(
+                f"Status Code Check: Expected [200] | Actual [{response.status_code}]"
+            ):
                 assert response.status_code == 200
 
             with allure.step("Verify: Response is a list"):
-                assert isinstance(response.json(),
-                                  list), f"Error: Expected a list, received {type(response.json())}"
+                assert isinstance(
+                    response.json(), list
+                ), f"Error: Expected a list, received {type(response.json())}"
 
         return response
 
@@ -43,24 +50,30 @@ class Get_API(Create_API):
         allure.attach(
             response.text,
             name=f"Server Response for ID {id_to_use}",
-            attachment_type=allure.attachment_type.JSON
+            attachment_type=allure.attachment_type.JSON,
         )
 
         with allure.step(f"AUTOMATIC VALIDATION: ID {id_to_use}"):
             # 1. Status Code Validation
-            with allure.step(f"Status Code: Expected [{expected_status}] | Actual [{response.status_code}]"):
+            with allure.step(
+                f"Status Code: Expected [{expected_status}] | Actual [{response.status_code}]"
+            ):
                 assert response.status_code == expected_status
 
             # 2. Model Validation (only if status is success and model verification was requested)
             if response.status_code == 200 and expected_model is not None:
                 response_json = response.json()
-                actual_model = response_json.get('modelul')
+                actual_model = response_json.get("modelul")
 
-                with allure.step(f"Verify 'modelul' field: [{expected_model}] == [{actual_model}]"):
-                    assert actual_model == expected_model, f"Error! Expected: {expected_model}, Received: {actual_model}"
+                with allure.step(
+                    f"Verify 'modelul' field: [{expected_model}] == [{actual_model}]"
+                ):
+                    assert (
+                        actual_model == expected_model
+                    ), f"Error! Expected: {expected_model}, Received: {actual_model}"
 
                 # Optional: Verify that the ID in JSON is correct
                 with allure.step(f"Verify ID integrity in JSON: [{id_to_use}]"):
-                    assert str(response_json.get('id')) == str(id_to_use)
+                    assert str(response_json.get("id")) == str(id_to_use)
 
         return response

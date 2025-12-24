@@ -1,12 +1,16 @@
 import pytest
 import allure
 
+
 @allure.feature("Phone Management - Negative")
 @allure.story("Create (POST) - Invalid Data")
-@pytest.mark.parametrize("bad_payload", [
-    {"modelul": "OnlyModel"},  # Incomplete
-    {"anul": "NotANumber", "RAM": "4GB"}  # Wrong data type
-])
+@pytest.mark.parametrize(
+    "bad_payload",
+    [
+        {"modelul": "OnlyModel"},  # Incomplete
+        {"anul": "NotANumber", "RAM": "4GB"},  # Wrong data type
+    ],
+)
 def test_create_invalid(create_api, bad_payload):
     """Tests creation with invalid data. Assertion is handled in Create_API."""
     allure.dynamic.title("POST: Validate 400 Error (Bad Request)")
@@ -47,7 +51,7 @@ def test_delete_twice_check(delete_api, phone_setup):
     allure.dynamic.title("DELETE: Validate 404 on Second Deletion")
 
     # 1. Normal deletion
-    delete_api.delete_phone(phone_setup['id'])
+    delete_api.delete_phone(phone_setup["id"])
 
     # 2. Verify it no longer exists (The method performs an internal 404 assertion)
-    delete_api.verify_is_gone(phone_setup['id'])
+    delete_api.verify_is_gone(phone_setup["id"])

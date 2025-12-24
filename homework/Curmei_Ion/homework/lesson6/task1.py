@@ -7,11 +7,11 @@ list_string = string.split()
 new_list = []
 
 for item in list_string:
-    if item.endswith(',') or item.endswith('.'):
-        item = item[:-1] + 'ing' + item[-1]
+    if item.endswith(",") or item.endswith("."):
+        item = item[:-1] + "ing" + item[-1]
     else:
-        item += 'ing'
+        item += "ing"
     new_list.append(item)
 
-new_string = ' '.join(new_list)
+new_string = " ".join(new_list)
 print(new_string)

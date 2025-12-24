@@ -13,13 +13,19 @@ class Update_API(Create_API):
     def execute_update(self, payload, method="PUT", expected_status=200):
         url = f"{self.base_url}/{self.target_id}"
 
-        with allure.step(f"Execution {method} on ID {self.target_id} (Expected: {expected_status})"):
+        with allure.step(
+            f"Execution {method} on ID {self.target_id} (Expected: {expected_status})"
+        ):
             if method.upper() == "PUT":
                 self.response = requests.put(url, json=payload, headers=self.header)
             else:
                 self.response = requests.patch(url, json=payload, headers=self.header)
 
-            allure.attach(self.response.text, name="Server Response", attachment_type=allure.attachment_type.JSON)
+            allure.attach(
+                self.response.text,
+                name="Server Response",
+                attachment_type=allure.attachment_type.JSON,
+            )
 
             # INTERNAL VALIDATION
             with allure.step(f"Status Code Check: Expected [{expected_status}]"):
@@ -36,5 +42,7 @@ class Update_API(Create_API):
         with allure.step("AUTOMATIC VALIDATION: Received Data"):
             for key, expected_value in expected_payload.items():
                 actual_value = self.response_json.get(key)
-                with allure.step(f"Verifying '{key}': [{expected_value}] == [{actual_value}]"):
+                with allure.step(
+                    f"Verifying '{key}': [{expected_value}] == [{actual_value}]"
+                ):
                     assert actual_value == expected_value

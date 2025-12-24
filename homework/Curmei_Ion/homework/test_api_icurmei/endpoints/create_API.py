@@ -6,16 +6,25 @@ class Create_API:
     base_url = "http://127.0.0.1:5000/api/v1/phones"
     header = {"Content-Type": "application/json"}
     payload = {
-        "modelul": "Test Phone", "submodelul": "Automation",
-        "anul": 2024, "CPU": "Snapdragon", "RAM": "12GB"
+        "modelul": "Test Phone",
+        "submodelul": "Automation",
+        "anul": 2024,
+        "CPU": "Snapdragon",
+        "RAM": "12GB",
     }
 
     @allure.step("API: Create resource (POST)")
     def create_phone(self, payload=None, expected_status=None):  # Added expected_status
         target_payload = payload if payload else self.payload
-        response = requests.post(self.base_url, json=target_payload, headers=self.header)
+        response = requests.post(
+            self.base_url, json=target_payload, headers=self.header
+        )
 
-        allure.attach(response.text, name="Creation Response", attachment_type=allure.attachment_type.JSON)
+        allure.attach(
+            response.text,
+            name="Creation Response",
+            attachment_type=allure.attachment_type.JSON,
+        )
 
         # INTERNAL VALIDATION LOGIC
         if expected_status:

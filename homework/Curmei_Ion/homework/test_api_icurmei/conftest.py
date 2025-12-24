@@ -14,7 +14,7 @@ def phone_setup():
         data = api.create_phone()
     yield data
     with allure.step("POSTCONDITION: Environment Cleanup (Delete phone)"):
-        Delete_API().delete_phone(data['id'])
+        Delete_API().delete_phone(data["id"])
 
 
 @pytest.fixture
@@ -30,7 +30,7 @@ def create_api():
 def update_api(phone_setup):
     with allure.step("CONFIGURATION: Prepare Update_API"):
         api = Update_API()
-        api.target_id = phone_setup['id']
+        api.target_id = phone_setup["id"]
         return api
 
 
@@ -39,7 +39,7 @@ def get_api(phone_setup):
     with allure.step("CONFIGURATION: Prepare Get_API"):
         api = Get_API()
         # Verify if phone_setup contains the 'id' key (retrieved from response.json() during creation)
-        api.target_id = phone_setup['id']
+        api.target_id = phone_setup["id"]
         return api
 
 

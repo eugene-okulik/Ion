@@ -2,13 +2,13 @@ def decorator_calc(func):
     def wrapper(first, second, operation):
 
         if first < 0 or second < 0:
-            operation = '*'
+            operation = "*"
         elif first == second:
-            operation = '+'
+            operation = "+"
         elif first > second:
-            operation = '-'
+            operation = "-"
         elif second > first:
-            operation = '/'
+            operation = "/"
 
         return func(first, second, operation)
 
@@ -17,19 +17,19 @@ def decorator_calc(func):
 
 @decorator_calc
 def calc(first, second, operation):
-    if operation == '+':
+    if operation == "+":
         return first + second
-    elif operation == '-':
+    elif operation == "-":
         return first - second
-    elif operation == '*':
+    elif operation == "*":
         return first * second
-    elif operation == '/':
+    elif operation == "/":
         if second != 0:
             return first / second
         else:
             return "Don't will be devided by zero "
     else:
-        return 'unknow operation'
+        return "unknow operation"
 
 
 number1 = int(input("Introduction first number: "))

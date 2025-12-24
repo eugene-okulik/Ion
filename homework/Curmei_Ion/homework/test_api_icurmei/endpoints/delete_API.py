@@ -17,6 +17,8 @@ class Delete_API(Create_API):
     def verify_is_gone(self, phone_id):
         # Attempt to delete again or perform a GET to confirm it's gone
         response = requests.delete(f"{self.base_url}/{phone_id}", headers=self.header)
-        with allure.step(f"Status Code Check: Expected [404] | Actual [{response.status_code}]"):
+        with allure.step(
+            f"Status Code Check: Expected [404] | Actual [{response.status_code}]"
+        ):
             assert response.status_code == 404
         return response
