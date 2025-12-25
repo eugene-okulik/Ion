@@ -2,23 +2,22 @@ import mysql.connector as mysql
 
 # Conectarea la baza de date
 db = mysql.connect(
-    username='st-onl',
-    password='AVNS_tegPDkI5BlB2lW5eASC',
-    host='db-mysql-fra1-09136-do-user-7651996-0.b.db.ondigitalocean.com',
+    username="st-onl",
+    password="AVNS_tegPDkI5BlB2lW5eASC",
+    host="db-mysql-fra1-09136-do-user-7651996-0.b.db.ondigitalocean.com",
     port=25060,
-    database='st-onl'
+    database="st-onl",
 )
 
 cursor = db.cursor(dictionary=True)
 
-cursor.execute("INSERT INTO students(name, second_name) VALUES ('Automation', 'Programist')")
+cursor.execute(
+    "INSERT INTO students(name, second_name) VALUES ('Automation', 'Programist')"
+)
 student_id = cursor.lastrowid
 
 query = "INSERT INTO books(title, taken_by_student_id) VALUES (%s, %s)"
-values = [
-    ('Automation with Python', student_id),
-    ('Automation with Java', student_id)
-]
+values = [("Automation with Python", student_id), ("Automation with Java", student_id)]
 cursor.executemany(query, values)
 
 cursor.execute(
@@ -33,13 +32,21 @@ subject_id1 = cursor.lastrowid
 cursor.execute("INSERT INTO subjets (title) VALUES ('back end automation')")
 subject_id2 = cursor.lastrowid
 
-cursor.execute(f"INSERT INTO lessons(title, subject_id) VALUES ('history of automation', '{subject_id1}')")
+cursor.execute(
+    f"INSERT INTO lessons(title, subject_id) VALUES ('history of automation', '{subject_id1}')"
+)
 lesson1_id1 = cursor.lastrowid
-cursor.execute(f"INSERT INTO lessons(title, subject_id) VALUES ('base of frontend automation', '{subject_id1}')")
+cursor.execute(
+    f"INSERT INTO lessons(title, subject_id) VALUES ('base of frontend automation', '{subject_id1}')"
+)
 lesson2_id1 = cursor.lastrowid
-cursor.execute(f"INSERT INTO lessons(title, subject_id) VALUES ('base of backend automation', '{subject_id2}')")
+cursor.execute(
+    f"INSERT INTO lessons(title, subject_id) VALUES ('base of backend automation', '{subject_id2}')"
+)
 lesson1_id2 = cursor.lastrowid
-cursor.execute(f"INSERT INTO lessons(title, subject_id) VALUES ('advance of backend automation', '{subject_id2}')")
+cursor.execute(
+    f"INSERT INTO lessons(title, subject_id) VALUES ('advance of backend automation', '{subject_id2}')"
+)
 lesson2_id2 = cursor.lastrowid
 
 notes = "INSERT INTO marks (value, lesson_id, student_id) VALUES (%s, %s, %s)"
@@ -47,7 +54,7 @@ mark = [
     (8, lesson1_id1, student_id),
     (9, lesson2_id1, student_id),
     (9, lesson1_id2, student_id),
-    (10, lesson2_id2, student_id)
+    (10, lesson2_id2, student_id),
 ]
 cursor.executemany(notes, mark)
 # select all from create students

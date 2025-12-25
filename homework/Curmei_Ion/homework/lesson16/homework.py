@@ -6,22 +6,22 @@ import csv
 dotenv.load_dotenv()
 # connect to database
 db = mysql.connect(
-    username=os.getenv('DB_USER'),
-    password=os.getenv('DB_PASSW'),
-    host=os.getenv('DB_HOST'),
-    port=os.getenv('DB_PORT'),
-    database=os.getenv('DB_NAME')
+    username=os.getenv("DB_USER"),
+    password=os.getenv("DB_PASSW"),
+    host=os.getenv("DB_HOST"),
+    port=os.getenv("DB_PORT"),
+    database=os.getenv("DB_NAME"),
 )
 
 dotenv.load_dotenv()
 
 # connect to database
 db = mysql.connect(
-    username=os.getenv('DB_USER'),
-    password=os.getenv('DB_PASSW'),
-    host=os.getenv('DB_HOST'),
-    port=os.getenv('DB_PORT'),
-    database=os.getenv('DB_NAME')
+    username=os.getenv("DB_USER"),
+    password=os.getenv("DB_PASSW"),
+    host=os.getenv("DB_HOST"),
+    port=os.getenv("DB_PORT"),
+    database=os.getenv("DB_NAME"),
 )
 cursor = db.cursor(dictionary=True)
 
@@ -29,10 +29,10 @@ cursor = db.cursor(dictionary=True)
 base_path = os.path.dirname(__file__)
 homework_path = os.path.dirname(os.path.dirname(base_path))
 ion_path = os.path.dirname(homework_path)
-eugen_path = os.path.join(ion_path, 'eugene_okulik', 'Lesson_16', 'hw_data', 'data.csv')
+eugen_path = os.path.join(ion_path, "eugene_okulik", "Lesson_16", "hw_data", "data.csv")
 
 # open and read csv file
-with open(eugen_path, newline='') as eugen_file:
+with open(eugen_path, newline="") as eugen_file:
     reader = csv.reader(eugen_file)
     data = []
     for row in reader:
@@ -41,9 +41,18 @@ with open(eugen_path, newline='') as eugen_file:
 base = []
 
 for row in data:
-    name, second_name, group_title, book_title, subject_title, lesson_title, mark_value = row
+    (
+        name,
+        second_name,
+        group_title,
+        book_title,
+        subject_title,
+        lesson_title,
+        mark_value,
+    ) = row
 
-    cursor.execute("""
+    cursor.execute(
+        """
         SELECT
             s.id AS student_id,
             s.name,
@@ -64,7 +73,17 @@ for row in data:
         WHERE s.name = %s AND s.second_name = %s
           AND g.title = %s AND b.title = %s
           AND sub.title = %s AND l.title = %s AND m.value = %s
-    """, (name, second_name, group_title, book_title, subject_title, lesson_title, mark_value))
+    """,
+        (
+            name,
+            second_name,
+            group_title,
+            book_title,
+            subject_title,
+            lesson_title,
+            mark_value,
+        ),
+    )
 
     result = cursor.fetchone()
     if result:

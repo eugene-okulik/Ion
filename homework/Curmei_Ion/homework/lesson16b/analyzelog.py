@@ -6,14 +6,14 @@ def find_text_in_file(file_path, search_text):
     results = []
 
     try:
-        with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+        with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
             for line_number, line in enumerate(f, start=1):
                 words = line.strip().split()
                 for i, word in enumerate(words):
                     if search_text in word:
                         start = max(0, i - 5)
                         end = min(len(words), i + 6)
-                        snippet = ' '.join(words[start:end])
+                        snippet = " ".join(words[start:end])
                         results.append((line_number, snippet))
     except Exception as e:
         print(f"Error reading file {file_path}: {e}")
@@ -22,9 +22,13 @@ def find_text_in_file(file_path, search_text):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Search for text in log files from a folder")
-    parser.add_argument('folder', help="Full path to the folder containing log files")
-    parser.add_argument('--text', required=True, help="Text to search for in the log files")
+    parser = argparse.ArgumentParser(
+        description="Search for text in log files from a folder"
+    )
+    parser.add_argument("folder", help="Full path to the folder containing log files")
+    parser.add_argument(
+        "--text", required=True, help="Text to search for in the log files"
+    )
 
     args = parser.parse_args()
     folder = args.folder

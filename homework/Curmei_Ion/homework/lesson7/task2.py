@@ -1,4 +1,4 @@
-words = {'I': 3, 'love': 5, 'python': 1, '!': 50}
+words = {"I": 3, "love": 5, "python": 1, "!": 50}
 
 
 def multipy_item(words):

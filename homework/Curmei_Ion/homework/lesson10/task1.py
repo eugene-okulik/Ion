@@ -19,4 +19,4 @@ def example(text):
     print(text)
 
 
-example('print me')
+example("print me")
